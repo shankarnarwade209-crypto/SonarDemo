@@ -1,17 +1,15 @@
-
 name: SonarQube Analysis
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   sonar:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -22,8 +20,27 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Check SonarQube secrets
+        run: |
+          if [ -z "${{ secrets.SONAR_TOKEN }}" ]; then
+            echo "SONAR_TOKEN is EMPTY"
+            exit 1
+          else
+            echo "SONAR_TOKEN is PRESENT"
+          fi
+
+          if [ -z "${{ secrets.SONAR_HOST_URL }}" ]; then
+            echo "SONAR_HOST_URL is EMPTY"
+            exit 1
+          else
+            echo "SONAR_HOST_URL is PRESENT"
+          fi
+
       - name: Build and SonarQube Analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
           mvn clean verify sonar:sonar \
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.host.url="$SONAR_HOST_URL" \
+            -Dsonar.token="$SONAR_TOKEN"
