@@ -12,5 +12,10 @@ public class DemoController {
 		return "Data save successfully";
 
 	}
+		//@PostMapping("/save")
+	public String getData() {
+		return "Data retrive successfully";
+
+	}
 
 }
