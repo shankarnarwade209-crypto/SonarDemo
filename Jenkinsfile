@@ -1,9 +1,6 @@
 pipeline {
-    agent any
 
-    tools {
-        maven 'Maven-3.9.11'
-    }
+    agent any
 
     stages {
 
@@ -19,5 +16,34 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('SonarQube') {
+            steps {
+                echo 'SonarQube analysis will run here'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                echo 'Docker image will be built here'
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                echo 'Docker image will be pushed here'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Application deployment will happen here'
+            }
+        }
     }
 }
