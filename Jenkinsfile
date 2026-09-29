@@ -2,7 +2,7 @@ pipeline {
 
     agent any
 
-    Tools {
+    tools {
         maven 'Maven3'
     }
 
@@ -28,25 +28,25 @@ pipeline {
 
         stage('SonarQube') {
             steps {
-                echo 'SonarQube analysis will run here'
+                echo 'Configure SonarQube scan here'
             }
         }
 
         stage('Docker Build') {
             steps {
-                echo 'Docker image will be built here'
+                echo 'Configure Docker build here'
             }
         }
 
         stage('Docker Push') {
             steps {
-                echo 'Docker image will be pushed here'
+                echo 'Configure Docker push here'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Application deployment will happen here'
+                echo 'Configure deployment here'
             }
         }
     }
